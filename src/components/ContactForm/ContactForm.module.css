@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+  .label {
+    margin-block: 10px;
+  }
+  
+  .formButton {
+    margin-top: 10px;
+  }
