@@ -11,14 +11,25 @@ import { useSelector } from 'react-redux';
 export const App = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedContacts = localStorage.getItem('contacts');
+    if (storedContacts) {
+      const parsedContacts = JSON.parse(storedContacts);
+      parsedContacts.forEach(contact => {
+        const existingContact = contacts.find(c => c.id === contact.id);
+        if (!existingContact) {
+          dispatch(addContact(contact.name, contact.number));
+        }
+      });
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
     console.log(contacts);
   }, [contacts]);
-
 
   const handleSubmit = e => {
     const name = e.name;
@@ -34,7 +45,6 @@ export const App = () => {
     } else {
       dispatch(addContact(name, number));
     }
- 
   };
 
   const handleDelete = e => {
@@ -50,15 +60,15 @@ export const App = () => {
 
   return (
     <div
-    style={{
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'start',
-      marginLeft: 50,
-      fontSize: 20,
-      color: '#010101',
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'start',
+        marginLeft: 50,
+        fontSize: 20,
+        color: '#010101',
       }}
     >
       <h1>Phonebook</h1>
