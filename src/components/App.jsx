@@ -5,7 +5,7 @@ import { ContactList } from './ContactList/ContactList';
 import { useEffect } from 'react';
 import { getContacts, getFilter } from '../redux/selectors';
 import { useDispatch } from 'react-redux';
-import { addContact, delContact } from '../redux/createAction';
+import { addContact, delContact, updateContacts } from '../redux/createAction';
 import { useSelector } from 'react-redux';
 
 export const App = () => {
@@ -24,7 +24,8 @@ export const App = () => {
         }
       });
     }
-  }, [contacts, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
