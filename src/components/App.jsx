@@ -17,16 +17,11 @@ export const App = () => {
     const storedContacts = localStorage.getItem('contacts');
     if (storedContacts) {
       const parsedContacts = JSON.parse(storedContacts);
-      parsedContacts.forEach(contact => {
-        const existingContact = contacts.find(c => c.id === contact.id);
-        if (!existingContact) {
-          dispatch(addContact(contact.name, contact.number));
-        }
-      });
+      dispatch(updateContacts(parsedContacts));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [dispatch]);
+  
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
     console.log(contacts);
